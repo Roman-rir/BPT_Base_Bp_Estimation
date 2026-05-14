@@ -1,24 +1,12 @@
-// MAX32664 BPT base with web server
+// max32664 BAse with server
 #include "max32664.h"
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 
-#if __has_include("secrets.h")
-#include "secrets.h"
-#endif
-
 // ===== Wi-Fi Credentials =====
-#ifndef WIFI_SSID
-#define WIFI_SSID "YOUR_WIFI_SSID"
-#endif
-
-#ifndef WIFI_PASSWORD
-#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
-#endif
-
-const char *ssid = WIFI_SSID;
-const char *password = WIFI_PASSWORD;
+const char *ssid = "YOUR_WIFI_SSID";
+const char *password = "YOUR_WIFI_PASSWORD";
 
 // ===== MAX32664 Setup =====
 #define RESET_PIN D6
