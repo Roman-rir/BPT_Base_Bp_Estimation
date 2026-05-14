@@ -1,16 +1,16 @@
-// max32664 BAse with server
-#include "max32664.h"
-#include <ESP8266WebServer.h>
-#include <ESP8266WiFi.h>
+//max32664 BAse with server
 #include <Wire.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include "max32664.h"
 
 // ===== Wi-Fi Credentials =====
-const char *ssid = "YOUR_WIFI_SSID";
-const char *password = "YOUR_WIFI_PASSWORD";
+const char* ssid = "Roman";
+const char* password = "best4321";
 
 // ===== MAX32664 Setup =====
 #define RESET_PIN D6
-#define MFIO_PIN D0
+#define MFIO_PIN  D0
 #define RAWDATA_BUFFLEN 250
 max32664 MAX32664(RESET_PIN, MFIO_PIN, RAWDATA_BUFFLEN);
 
@@ -41,7 +41,7 @@ void loadAlgomodeParameters() {
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(D2, D1); // SDA = D2, SCL = D1
+  Wire.begin(D2, D1);  // SDA = D2, SCL = D1
 
   Serial.println("Connecting to WiFi...");
   WiFi.begin(ssid, password);
@@ -55,33 +55,26 @@ void setup() {
 
   loadAlgomodeParameters();
 
-  if (MAX32664.hubBegin() != CMD_SUCCESS || !MAX32664.startBPTcalibration() ||
+  if (MAX32664.hubBegin() != CMD_SUCCESS || 
+      !MAX32664.startBPTcalibration() || 
       !MAX32664.configAlgoInEstimationMode()) {
     Serial.println("Sensor initialization failed!");
-    while (1)
-      ;
+    while (1);
   }
   Serial.println("MAX32664 initialized successfully.");
 
   // Web server route
   server.on("/", []() {
-    String html = "<!DOCTYPE html><html><head><meta name='viewport' "
-                  "content='width=device-width, initial-scale=1'>";
-    html += "<style>body{font-family:sans-serif;background:#000;color:#0f0;"
-            "text-align:center;}h1{color:#0ff;}";
-    html +=
-        ".reading{font-size:24px;margin:10px;}#pulse{width:20px;height:20px;"
-        "background:red;border-radius:50%;animation:pulse 1s infinite;}";
-    html += "@keyframes "
-            "pulse{0%{transform:scale(1);}50%{transform:scale(1.5);}100%{"
-            "transform:scale(1);}}</style></head><body>";
+    String html = "<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width, initial-scale=1'>";
+    html += "<style>body{font-family:sans-serif;background:#000;color:#0f0;text-align:center;}h1{color:#0ff;}";
+    html += ".reading{font-size:24px;margin:10px;}#pulse{width:20px;height:20px;background:red;border-radius:50%;animation:pulse 1s infinite;}";
+    html += "@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.5);}100%{transform:scale(1);}}</style></head><body>";
     html += "<h1>Vitals Monitor</h1>";
     html += "<div class='reading'>SYS: " + String(sys) + " mmHg</div>";
     html += "<div class='reading'>DIA: " + String(dia) + " mmHg</div>";
     html += "<div class='reading'>HR: " + String(hr) + " bpm</div>";
     html += "<div class='reading'>SpO2: " + String(spo2) + " %</div>";
-    html += "<div id='pulse'></div><br><button "
-            "onclick='location.reload()'>Refresh</button></body></html>";
+    html += "<div id='pulse'></div><br><button onclick='location.reload()'>Refresh</button></body></html>";
     server.send(200, "text/html", html);
   });
 
@@ -94,9 +87,9 @@ void loop() {
   uint8_t num_samples = MAX32664.readSamples();
 
   if (num_samples) {
-    sys = MAX32664.max32664Output.sys;
-    dia = MAX32664.max32664Output.dia;
-    hr = MAX32664.max32664Output.hr;
+    sys  = MAX32664.max32664Output.sys;
+    dia  = MAX32664.max32664Output.dia;
+    hr   = MAX32664.max32664Output.hr;
     spo2 = MAX32664.max32664Output.spo2;
 
     Serial.printf("SYS: %d mmHg | DIA: %d mmHg | HR: %d bpm | SpO2: %d%%\n",
