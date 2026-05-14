@@ -1,0 +1,10 @@
+.pio/
+.vscode/
+.vs/
+build/
+*.elf
+*.bin
+*.hex
+*.map
+secrets.h
+
