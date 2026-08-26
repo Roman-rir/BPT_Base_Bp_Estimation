@@ -1,7 +1,6 @@
 # PPG-Based Low-Cost Cuffless Blood Pressure Monitoring System
 
-This repository contains the ESP8266 firmware and project notes for a low-cost cuffless continuous blood pressure monitoring prototype based on Blood Pressure Trending (BPT). The design is based on the accompanying paper, `becithcon_2025_ieee_submission.pdf`.
-
+This repository contains the ESP8266 firmware and project notes for a low-cost cuffless continuous blood pressure monitoring prototype based on Blood Pressure Trending (BPT). 
 The prototype uses a MAX32664D biometric sensor hub with a MAX30102 PPG sensor to estimate systolic and diastolic blood pressure trends after calibration. The full research design also includes heart rate, SpO2, mean arterial pressure (MAP), and skin temperature monitoring.
 
 > Research prototype only. This project is not a certified medical device and should not be used for clinical diagnosis or treatment decisions.
